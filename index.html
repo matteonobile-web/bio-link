@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Link in Bio - Matteo Nobile</title>
+    
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    
+    <style>
+        /* CONFIGURAZIONE GENERALE */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            min-height: 100vh;
+            padding: 40px 20px;
+            background-color: #000;
+            /* Sfondo con immagine e gradiente come nel tuo originale */
+            background-image: 
+                linear-gradient(180deg, rgba(0,0,0,0.85) 0%, rgba(0,0,0,0.4) 50%, rgba(0,0,0,0.9) 100%),
+                url('https://preview.redd.it/whats-yalls-pc-wallpapers-ill-go-first-v0-1uhd4skp2aud1.jpg?width=3840&format=pjpg&auto=webp&s=4592cda3a575bbceecb9bc66e045044d2e2f4783');
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed;
+        }
+
+        /* STILE INTESTAZIONE */
+        header {
+            text-align: center;
+            margin-bottom: 20px;
+            margin-top: 20px;
+        }
+
+        .profile-img {
+            width: 110px;
+            height: 110px;
+            border-radius: 50%;
+            border: 2px solid #ecf0f1;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+            object-fit: cover;
+        }
+
+        h1 {
+            color: #ffffff;
+            letter-spacing: -1px;
+            margin-top: 15px;
+            margin-bottom: 5px;
+            font-size: 22px;
+        }
+
+        .bio {
+            color: #95a5a6;
+            font-size: 0.75rem;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            margin: 0;
+        }
+
+        /* CONTENITORE E BOTTONI */
+        .container {
+            width: 100%;
+            max-width: 420px;
+            margin-top: 15px;
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        .btn {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: rgba(255, 255, 255, 0.08);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(15px);
+            -webkit-backdrop-filter: blur(15px);
+            color: #fff;
+            text-decoration: none;
+            padding: 16px;
+            border-radius: 12px;
+            font-weight: 500;
+            transition: all 0.3s ease;
+        }
+
+        .btn i {
+            margin-right: 12px;
+            font-size: 1.3rem;
+        }
+
+        /* EFFETTO HOVER */
+        .btn:hover {
+            background-color: #3498db;
+            color: white;
+            transform: translateY(-3px);
+            box-shadow: 0 6px 15px rgba(52, 152, 219, 0.3);
+        }
+
+        footer {
+            margin-top: auto;
+            padding: 30px 0;
+        }
+
+        footer p {
+            color: rgba(255,255,255,0.2);
+            font-size: 0.65rem;
+            text-transform: uppercase;
+            letter-spacing: 4px;
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <img src="foto-profilo.jpg" alt="Foto Profilo di Matteo" class="profile-img">
+        <h1>@_matteo_nobile_</h1>
+        <p class="bio">Liceo Scientifico - Scienze Applicate</p>
+    </header>
+
+    <main class="container">
+        <a href="https://torricellimi.edu.it/" target="_blank" rel="noopener" class="btn">
+            <i class="fas fa-university" style="color: #e74c3c;"></i> Istituto Torricelli
+        </a>
+
+        <a href="mailto:tuaemail@esempio.com" class="btn">
+            <i class="fas fa-envelope" style="color: #e74c3c;"></i> Scrivimi via Email
+        </a>
+
+        <a href="https://www.polimi.it/" target="_blank" rel="noopener" class="btn">
+            <i class="fas fa-graduation-cap" style="color: #e74c3c;"></i> Politecnico di Milano
+        </a>
+
+        <a href="https://linkedin.com" target="_blank" rel="noopener" class="btn">
+            <i class="fab fa-linkedin" style="color: #e74c3c;"></i> Profilo Professionale
+        </a>
+
+        <a href="https://youtube.com" target="_blank" rel="noopener" class="btn">
+            <i class="fab fa-youtube" style="color: #e74c3c;"></i> Esplora su YouTube
+        </a>
+    </main>
+
+    <footer>
+        <p>Informatica • 2026</p>
+    </footer>
+
+</body>
+</html>
