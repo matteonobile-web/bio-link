@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Linktree Pro - Matteo Nobile</title>
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
     <style>
         /* --- RESET E CURSORE --- */
         * { margin: 0; padding: 0; box-sizing: border-box; cursor: none; }
@@ -18,20 +18,17 @@
             transition: 0.4s; overflow-x: hidden; position: relative;
         }
 
-        /* Canvas per l'effetto Sorpresa */
         #smile-canvas {
             position: fixed; top: 0; left: 0; width: 100%; height: 100%;
             z-index: 0; opacity: 0; pointer-events: none; transition: opacity 1s ease-in-out;
         }
         body.smile-active #smile-canvas { opacity: 1; z-index: 1; }
 
-        /* Overlay scuro per leggibilità */
         body.dark-mode::before {
             content: ""; position: fixed; top: 0; left: 0; width: 100%; height: 100%;
             backdrop-filter: brightness(30%); -webkit-backdrop-filter: brightness(30%); z-index: -1;
         }
 
-        /* Cursore Personalizzato */
         #custom-cursor {
             position: fixed; width: 12px; height: 12px;
             background: rgba(255, 255, 255, 0.8); border-radius: 50%;
@@ -42,7 +39,6 @@
             width: 25px; height: 25px; background: rgba(255, 255, 255, 0.1); border: 1.5px solid #fff;
         }
 
-        /* --- LAYOUT --- */
         header, .container, footer { position: relative; z-index: 10; }
 
         header { text-align: center; margin: 20px 0; }
@@ -59,14 +55,13 @@
 
         .container { width: 100%; max-width: 400px; display: flex; flex-direction: column; gap: 12px; }
 
-        /* --- PULSANTI EFFETTO SPOTLIGHT --- */
         .btn-spotlight {
             position: relative; display: flex; align-items: center; justify-content: center;
             text-decoration: none; padding: 18px; border-radius: 14px;
             background: rgba(255, 255, 255, 0.08); border: 1px solid rgba(255, 255, 255, 0.1);
             backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px);
             overflow: hidden; color: #fff; font-weight: 500; transition: 0.3s;
-            width: 100%; border-top: 1px solid rgba(255, 255, 255, 0.2);
+            width: 100%;
         }
 
         .btn-spotlight::before {
@@ -85,9 +80,7 @@
 
         .btn-spotlight i { margin-right: 12px; font-size: 1.3rem; color: #e74c3c; z-index: 1; }
         body.dark-mode .btn-spotlight i { color: #3498db; }
-        .btn-spotlight span { z-index: 1; }
-
-        /* --- TEMA --- */
+        
         .theme-wrapper { margin-top: 25px; display: flex; justify-content: center; }
         #theme-toggle {
             padding: 10px 20px; border-radius: 30px; font-size: 0.8rem;
@@ -128,6 +121,10 @@
             <i class="fab fa-linkedin"></i> <span>Profilo Professionale</span>
         </a>
 
+        <a href="https://www.piazzaarmerina.org/agenda-eventi/palio-dei-normanni" target="_blank" class="btn-spotlight clickable">
+            <i class="fas fa-shield-alt"></i> <span>Palio dei Normanni: Figurante</span>
+        </a>
+
         <button id="smile-toggle" class="btn-spotlight clickable">
             <i class="fas fa-rocket"></i> <span> Modalità Allegria: ON</span>
         </button>
@@ -142,7 +139,6 @@
     <footer><p>Informatica • 2026</p></footer>
 
     <script>
-        // Benvenuto
         alert("Benvenuto nel mio Linktree Interattivo!");
 
         const cursor = document.getElementById('custom-cursor');
@@ -150,7 +146,6 @@
         const canvas = document.getElementById('smile-canvas');
         const ctx = canvas.getContext('2d');
 
-        // Mouse Move e Posizione Luce Spotlight
         document.addEventListener('mousemove', (e) => {
             cursor.style.left = e.clientX + 'px';
             cursor.style.top = e.clientY + 'px';
@@ -161,13 +156,11 @@
             });
         });
 
-        // Hover Effect per il cursore
         document.querySelectorAll('.clickable').forEach(el => {
             el.addEventListener('mouseenter', () => body.classList.add('custom-cursor-hover'));
             el.addEventListener('mouseleave', () => body.classList.remove('custom-cursor-hover'));
         });
 
-        // Cambio Tema Giorno/Notte
         const themeBtn = document.getElementById('theme-toggle');
         themeBtn.addEventListener('click', () => {
             body.classList.toggle('dark-mode');
@@ -176,9 +169,9 @@
             themeBtn.querySelector('i').className = isDark ? "fas fa-sun" : "fas fa-moon";
         });
 
-        // LOGICA SMILE RAIN (Effetto temporaneo)
+        // SMILE RAIN
         let width, height, columns, drops;
-        const smiles = ["😄", "😊", "😎", "🤩", "✨", "🎈", "🍀"]; 
+        const smiles = ["😄", "😊", "😎", "🤩", "✨", "🎈"]; 
         let smileInterval = null;
 
         function initSmiles() {
@@ -194,31 +187,25 @@
             for (let i = 0; i < drops.length; i++) {
                 ctx.fillText(smiles[i % smiles.length], i * 35, drops[i] * 35);
                 if (drops[i] * 35 > height) drops[i] = -2;
-                drops[i] += 0.25; // Velocità di caduta
+                drops[i] += 0.25;
             }
         }
 
         document.getElementById('smile-toggle').addEventListener('click', () => {
             if (body.classList.contains('smile-active')) return;
-
             alert("Non sapevo cosa mettere, ma volevo farti sorridere! 😄");
-
             body.classList.add('smile-active');
             initSmiles();
             smileInterval = setInterval(drawSmiles, 30);
-
-            // STOP AUTOMATICO DOPO 5 SECONDI
             setTimeout(() => {
                 body.classList.remove('smile-active');
                 setTimeout(() => { 
                     clearInterval(smileInterval); 
                     smileInterval = null; 
                     ctx.clearRect(0, 0, width, height); 
-                }, 1000); // Aspetta la fine della transizione opacità
+                }, 1000);
             }, 5000);
         });
-
-        window.addEventListener('resize', () => { if(body.classList.contains('smile-active')) initSmiles(); });
     </script>
 </body>
 </html>
