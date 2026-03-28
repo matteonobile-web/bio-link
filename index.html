@@ -1,180 +1,198 @@
 <!DOCTYPE html>
 <html lang="it">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Linktree Pro - Matteo Nobile</title>
-<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
-<style>
-* {
-margin: 0;
-padding: 0;
-box-sizing: border-box;
-}
-body {
-font-family: 'Poppins', sans-serif;
-display: flex;
-flex-direction: column;
-align-items: center;
-min-height: 100vh;
-padding: 20px;
-background-color: #000;
-background-size: cover;
-background-position: center;
-background-attachment: fixed;
-transition: 0.4s;
-position: relative;
-}
-body.dark-mode::before {
-content: "";
-position: fixed;
-top: 0;
-left: 0;
-width: 100%;
-height: 100%;
-backdrop-filter: brightness(40%);
--webkit-backdrop-filter: brightness(40%);
-z-index: -1;
-}
-body.dark-mode {
-color: #e0e0e0;
-}
-body.dark-mode .btn {
-background: rgba(0, 0, 0, 0.4) !important;
-border: 1px solid rgba(255, 255, 255, 0.1) !important;
-color: #e0e0e0;
-}
-body.dark-mode .btn i {
-color: #3498db;
-}
-body.dark-mode #theme-toggle {
-background: rgba(255, 255, 255, 0.15) !important;
-border: 1px solid rgba(255, 255, 255, 0.2) !important;
-}
-header {
-text-align: center;
-margin: 20px 0;
-}
-.profile-img {
-width: 110px;
-height: 110px;
-border-radius: 50%;
-border: 2px solid #fff;
-box-shadow: 0 10px 30px rgba(0,0,0,0.5);
-object-fit: cover;
-}
-h1 {
-color: #ffffff;
-font-size: 22px;
-margin-top: 15px;
-margin-bottom: 5px;
-}
-.subtitle {
-color: #f1f2f6;
-font-size: 0.75rem;
-text-transform: uppercase;
-margin: 0;
-}
-.container {
-width: 100%;
-max-width: 420px;
-display: flex;
-flex-direction: column;
-gap: 12px;
-}
-.btn {
-display: flex;
-align-items: center;
-justify-content: center;
-text-decoration: none;
-padding: 18px;
-border-radius: 12px;
-font-weight: 500;
-transition: 0.3s;
-background: rgba(255, 255, 255, 0.15);
-border: 1px solid rgba(255, 255, 255, 0.2);
-backdrop-filter: blur(15px);
-color: #fff;
-}
-.btn i {
-margin-right: 12px;
-font-size: 1.3rem;
-color: #e74c3c;
-}
-.btn:hover {
-background: rgba(255, 255, 255, 0.25);
-transform: translateY(-4px);
-}
-.toggle-container {
-margin-top: 40px;
-margin-bottom: 20px;
-}
-#theme-toggle {
-background: rgba(255, 255, 255, 0.1);
-color: #ffffff;
-border: 1px solid rgba(255, 255, 255, 0.3);
-padding: 12px 24px;
-border-radius: 30px;
-cursor: pointer;
-font-size: 0.85rem;
-font-family: 'Poppins', sans-serif;
-transition: 0.3s;
-}
-footer {
-margin-top: auto;
-padding: 20px 0;
-}
-footer p {
-color: rgba(255,255,255,0.4);
-font-size: 0.65rem;
-text-transform: uppercase;
-}
-</style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Linktree Pro - Matteo Nobile</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        /* --- RESET E CURSORE --- */
+        * { margin: 0; padding: 0; box-sizing: border-box; cursor: none; }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            min-height: 100vh;
+            padding: 20px;
+            background-color: #000;
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed;
+            transition: 0.4s;
+            overflow-x: hidden;
+        }
+
+        body.dark-mode::before {
+            content: "";
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            backdrop-filter: brightness(30%);
+            -webkit-backdrop-filter: brightness(30%);
+            z-index: -1;
+        }
+
+        /* --- CURSORE PERSONALIZZATO --- */
+        #custom-cursor {
+            position: fixed;
+            width: 12px; height: 12px;
+            background: rgba(255, 255, 255, 0.8);
+            border-radius: 50%;
+            pointer-events: none;
+            transform: translate(-50%, -50%);
+            transition: width 0.2s, height 0.2s, background-color 0.3s;
+            z-index: 9999;
+        }
+
+        body.custom-cursor-hover #custom-cursor {
+            width: 25px; height: 25px;
+            background: rgba(255, 255, 255, 0.1);
+            border: 1.5px solid #fff;
+        }
+
+        /* --- PROFILO --- */
+        header { text-align: center; margin: 20px 0; }
+        .profile-container {
+            width: 110px; height: 110px;
+            margin: 0 auto;
+            border-radius: 50%;
+            overflow: hidden;
+            border: 2px solid #fff;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+        }
+        .profile-img { width: 100%; height: 100%; object-fit: cover; transition: 0.4s; }
+        .profile-container:hover .profile-img { transform: scale(1.1); }
+
+        h1 { color: #fff; font-size: 22px; margin-top: 15px; }
+        .subtitle { color: rgba(255,255,255,0.7); font-size: 0.75rem; text-transform: uppercase; margin-bottom: 25px; }
+
+        /* --- PULSANTI SPOTLIGHT (Effetto Luce) --- */
+        .container { width: 100%; max-width: 400px; display: flex; flex-direction: column; gap: 12px; }
+        
+        .btn-spotlight {
+            position: relative;
+            display: flex; align-items: center; justify-content: center;
+            text-decoration: none; padding: 18px; border-radius: 14px;
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            overflow: hidden; /* Taglia la luce fuori dai bordi */
+            color: #fff; font-weight: 500; transition: 0.3s;
+        }
+
+        /* La luce che segue il mouse */
+        .btn-spotlight::before {
+            content: "";
+            position: absolute;
+            top: var(--y, 0);
+            left: var(--x, 0);
+            width: 300px; height: 300px;
+            background: radial-gradient(circle closest-side, rgba(231, 76, 60, 0.25), transparent);
+            transform: translate(-50%, -50%);
+            opacity: 0;
+            transition: opacity 0.3s;
+            pointer-events: none;
+        }
+
+        /* Luce azzurra in Dark Mode */
+        body.dark-mode .btn-spotlight::before {
+            background: radial-gradient(circle closest-side, rgba(52, 152, 219, 0.3), transparent);
+        }
+
+        .btn-spotlight:hover::before { opacity: 1; }
+        .btn-spotlight:hover { transform: translateY(-2px); border-color: rgba(255,255,255,0.3); }
+
+        .btn-spotlight i { margin-right: 12px; font-size: 1.3rem; color: #e74c3c; z-index: 1; }
+        body.dark-mode .btn-spotlight i { color: #3498db; }
+        .btn-spotlight span { z-index: 1; }
+
+        /* --- TEMA --- */
+        .theme-wrapper { margin-top: 25px; display: flex; justify-content: center; }
+        #theme-toggle {
+            padding: 10px 20px; border-radius: 30px; font-size: 0.8rem;
+            background: rgba(255, 255, 255, 0.1); border: 1px solid rgba(255,255,255,0.2);
+            color: #fff; display: flex; align-items: center; gap: 8px; transition: 0.3s;
+        }
+        #theme-toggle:hover { background: rgba(255,255,255,0.2); transform: scale(1.05); }
+
+        footer { margin-top: auto; padding: 20px 0; color: rgba(255,255,255,0.3); font-size: 0.6rem; text-transform: uppercase; }
+    </style>
 </head>
-<body style="background-image: linear-gradient(180deg, rgba(0,0,0,0.7) 0%, rgba(0,0,0,0.3) 50%, rgba(0,0,0,0.8) 100%), url('https://preview.redd.it/whats-yalls-pc-wallpapers-ill-go-first-v0-1uhd4skp2aud1.jpg?width=3840&format=pjpg&auto=webp&s=4592cda3a575bbceecb9bc66e045044d2e2f4783');">
-<header>
-<img src="foto-profilo.jpg" alt="Foto Profilo di Matteo" class="profile-img">
-<h1>@_matteo_nobile_</h1>
-<p class="subtitle">Liceo Scientifico - Scienze Applicate</p>
-</header>
-<main class="container">
-<a href="https://torricellimi.edu.it/" target="_blank" rel="noopener" class="btn">
-<i class="fas fa-university"></i> Istituto Torricelli
-</a>
-<a href="mailto:matteonobile@teamdigitale.torricellimi.edu.it" class="btn">
-<i class="fas fa-envelope"></i> Scrivimi via Email
-</a>
-<a href="https://www.instagram.com/la_storia_insegna_?igsh=ZzhnazhtNDBmdTA2" target="_blank" rel="noopener" class="btn">
-<i class="fab fa-instagram"></i> la_storia_insegna_
-</a>
-<a href="https://it.linkedin.com/in/matteo-nobile-456ba43b9" target="_blank" rel="noopener" class="btn">
-<i class="fab fa-linkedin"></i> Profilo Professionale
-</a>
-<a href="https://youtube.com" target="_blank" rel="noopener" class="btn">
-<i class="fab fa-youtube"></i> Esplora su YouTube
-</a>
-</main>
-<div class="toggle-container">
-<button id="theme-toggle">Passa alla modalità notte</button>
-</div>
-<footer>
-<p>Informatica • 2026</p>
-</footer>
-<script>
-alert("Benvenuto nel mio Linktree Interattivo!");
+<body style="background-image: linear-gradient(180deg, rgba(0,0,0,0.8) 0%, rgba(0,0,0,0.4) 100%), url('https://preview.redd.it/whats-yalls-pc-wallpapers-ill-go-first-v0-1uhd4skp2aud1.jpg?width=3840&format=pjpg&auto=webp&s=4592cda3a575bbceecb9bc66e045044d2e2f4783');">
 
-const pulsante = document.getElementById('theme-toggle');
-const corpo = document.body;
+    <div id="custom-cursor"></div>
 
-pulsante.addEventListener('click', () => {
-corpo.classList.toggle('dark-mode');
-if (corpo.classList.contains('dark-mode')) {
-pulsante.innerText = "Passa alla modalità giorno";
-} else {
-pulsante.innerText = "Passa alla modalità notte";
-}
-});
-</script>
+    <header>
+        <div class="profile-container">
+            <img src="foto-profilo.jpg" alt="Matteo" class="profile-img">
+        </div>
+        <h1>@_matteo_nobile_</h1>
+        <p class="subtitle">Liceo Scientifico - Scienze Applicate</p>
+    </header>
+
+    <main class="container">
+        <a href="https://torricellimi.edu.it/" target="_blank" class="btn-spotlight clickable">
+            <i class="fas fa-university"></i> <span>Istituto Torricelli</span>
+        </a>
+        <a href="mailto:matteonobile@teamdigitale.torricellimi.edu.it" class="btn-spotlight clickable">
+            <i class="fas fa-envelope"></i> <span>Scrivimi via Email</span>
+        </a>
+        <a href="https://www.instagram.com/la_storia_insegna_?igsh=ZzhnazhtNDBmdTA2" target="_blank" class="btn-spotlight clickable">
+            <i class="fab fa-instagram"></i> <span>la_storia_insegna_</span>
+        </a>
+        <a href="https://it.linkedin.com/in/matteo-nobile-456ba43b9" target="_blank" class="btn-spotlight clickable">
+            <i class="fab fa-linkedin"></i> <span>Profilo Professionale</span>
+        </a>
+        <a href="https://youtube.com" target="_blank" class="btn-spotlight clickable">
+            <i class="fab fa-youtube"></i> <span>Esplora su YouTube</span>
+        </a>
+
+        <div class="theme-wrapper">
+            <button id="theme-toggle" class="clickable">
+                <i class="fas fa-moon"></i> <span>Passa alla modalità notte</span>
+            </button>
+        </div>
+    </main>
+
+    <footer><p>Informatica • 2026</p></footer>
+
+    <script>
+        alert("Benvenuto nel mio Linktree Interattivo!");
+
+        const cursor = document.getElementById('custom-cursor');
+        const body = document.body;
+
+        // Gestione Cursore e Spotlight
+        document.addEventListener('mousemove', (e) => {
+            cursor.style.left = e.clientX + 'px';
+            cursor.style.top = e.clientY + 'px';
+
+            // Aggiorna la posizione della luce per ogni pulsante
+            document.querySelectorAll('.btn-spotlight').forEach(btn => {
+                const rect = btn.getBoundingClientRect();
+                const x = e.clientX - rect.left;
+                const y = e.clientY - rect.top;
+                btn.style.setProperty('--x', x + 'px');
+                btn.style.setProperty('--y', y + 'px');
+            });
+        });
+
+        // Hover Cursore
+        document.querySelectorAll('.clickable').forEach(el => {
+            el.addEventListener('mouseenter', () => body.classList.add('custom-cursor-hover'));
+            el.addEventListener('mouseleave', () => body.classList.remove('custom-cursor-hover'));
+        });
+
+        // Cambio Tema
+        const themeBtn = document.getElementById('theme-toggle');
+        themeBtn.addEventListener('click', () => {
+            body.classList.toggle('dark-mode');
+            const isDark = body.classList.contains('dark-mode');
+            themeBtn.querySelector('span').innerText = isDark ? "Passa alla modalità giorno" : "Passa alla modalità notte";
+            themeBtn.querySelector('i').className = isDark ? "fas fa-sun" : "fas fa-moon";
+        });
+    </script>
 </body>
 </html>
