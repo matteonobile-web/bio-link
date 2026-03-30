@@ -7,7 +7,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
     <style>
-        /* --- RESET E CURSORE --- */
+        /* BASE E FRECCIA */
         * { margin: 0; padding: 0; box-sizing: border-box; cursor: none; }
 
         body {
@@ -18,44 +18,46 @@
             transition: 0.4s; overflow-x: hidden; position: relative;
         }
 
-        #smile-canvas {
+        /* Sfondo animato */
+        #sfond-anim {
             position: fixed; top: 0; left: 0; width: 100%; height: 100%;
             z-index: 0; opacity: 0; pointer-events: none; transition: opacity 1s ease-in-out;
         }
-        body.smile-active #smile-canvas { opacity: 1; z-index: 1; }
+        body.anim-on #sfond-anim { opacity: 1; z-index: 1; }
 
-        body.dark-mode::before {
+        /* Filtro scuro per notte */
+        body.notte-on::before {
             content: ""; position: fixed; top: 0; left: 0; width: 100%; height: 100%;
             backdrop-filter: brightness(30%); -webkit-backdrop-filter: brightness(30%); z-index: -1;
         }
 
-        #custom-cursor {
+        #punt-pers {
             position: fixed; width: 12px; height: 12px;
             background: rgba(255, 255, 255, 0.8); border-radius: 50%;
             pointer-events: none; transform: translate(-50%, -50%);
             transition: width 0.2s, height 0.2s, background-color 0.3s; z-index: 9999;
         }
-        body.custom-cursor-hover #custom-cursor {
+        body.punt-su #punt-pers {
             width: 25px; height: 25px; background: rgba(255, 255, 255, 0.1); border: 1.5px solid #fff;
         }
 
-        header, .container, footer { position: relative; z-index: 10; }
+        header, .box-link, footer { position: relative; z-index: 10; }
 
         header { text-align: center; margin: 20px 0; }
-        .profile-container {
+        .cerchio-foto {
             width: 110px; height: 110px; margin: 0 auto;
             border-radius: 50%; overflow: hidden; border: 2px solid #fff;
             box-shadow: 0 10px 30px rgba(0,0,0,0.5);
         }
-        .profile-img { width: 100%; height: 100%; object-fit: cover; transition: 0.4s; }
-        .profile-container:hover .profile-img { transform: scale(1.1); }
+        .img-prof { width: 100%; height: 100%; object-fit: cover; transition: 0.4s; }
+        .cerchio-foto:hover .img-prof { transform: scale(1.1); }
 
         h1 { color: #fff; font-size: 22px; margin-top: 15px; }
-        .subtitle { color: rgba(255,255,255,0.7); font-size: 0.75rem; text-transform: uppercase; margin-bottom: 25px; }
+        .sotto-tit { color: rgba(255,255,255,0.7); font-size: 0.75rem; text-transform: uppercase; margin-bottom: 25px; }
 
-        .container { width: 100%; max-width: 400px; display: flex; flex-direction: column; gap: 12px; }
+        .box-link { width: 100%; max-width: 400px; display: flex; flex-direction: column; gap: 12px; }
 
-        .btn-spotlight {
+        .btn-luce {
             position: relative; display: flex; align-items: center; justify-content: center;
             text-decoration: none; padding: 18px; border-radius: 14px;
             background: rgba(255, 255, 255, 0.08); border: 1px solid rgba(255, 255, 255, 0.1);
@@ -64,25 +66,26 @@
             width: 100%;
         }
 
-        .btn-spotlight::before {
+        /* Effetto scia mouse */
+        .btn-luce::before {
             content: ""; position: absolute; top: var(--y, 0); left: var(--x, 0);
             width: 250px; height: 250px;
             background: radial-gradient(circle closest-side, rgba(231, 76, 60, 0.3), transparent);
             transform: translate(-50%, -50%); opacity: 0; transition: opacity 0.3s; pointer-events: none;
         }
 
-        body.dark-mode .btn-spotlight::before {
+        body.notte-on .btn-luce::before {
             background: radial-gradient(circle closest-side, rgba(52, 152, 219, 0.4), transparent);
         }
 
-        .btn-spotlight:hover::before { opacity: 1; }
-        .btn-spotlight:hover { transform: translateY(-3px); border-color: rgba(255,255,255,0.3); }
+        .btn-luce:hover::before { opacity: 1; }
+        .btn-luce:hover { transform: translateY(-3px); border-color: rgba(255,255,255,0.3); }
 
-        .btn-spotlight i { margin-right: 12px; font-size: 1.3rem; color: #e74c3c; z-index: 1; }
-        body.dark-mode .btn-spotlight i { color: #3498db; }
+        .btn-luce i { margin-right: 12px; font-size: 1.3rem; color: #e74c3c; z-index: 1; }
+        body.notte-on .btn-luce i { color: #3498db; }
         
-        .theme-wrapper { margin-top: 25px; display: flex; justify-content: center; }
-        #theme-toggle {
+        .area-tema { margin-top: 25px; display: flex; justify-content: center; }
+        #tasto-notte {
             padding: 10px 20px; border-radius: 30px; font-size: 0.8rem;
             background: rgba(255, 255, 255, 0.1); border: 1px solid rgba(255,255,255,0.2);
             color: #fff; display: flex; align-items: center; gap: 8px; transition: 0.3s;
@@ -93,44 +96,44 @@
 </head>
 <body style="background-image: linear-gradient(180deg, rgba(0,0,0,0.8) 0%, rgba(0,0,0,0.4) 100%), url('https://preview.redd.it/whats-yalls-pc-wallpapers-ill-go-first-v0-1uhd4skp2aud1.jpg?width=3840&format=pjpg&auto=webp&s=4592cda3a575bbceecb9bc66e045044d2e2f4783');">
 
-    <canvas id="smile-canvas"></canvas>
-    <div id="custom-cursor"></div>
+    <canvas id="sfond-anim"></canvas>
+    <div id="punt-pers"></div>
 
     <header>
-        <div class="profile-container">
-            <img src="foto-profilo.jpg" alt="Matteo" class="profile-img">
+        <div class="cerchio-foto">
+            <img src="foto-profilo.jpg" alt="Matteo" class="img-prof">
         </div>
         <h1>@_matteo_nobile_</h1>
-        <p class="subtitle">Liceo Scientifico - Scienze Applicate</p>
+        <p class="sotto-tit">Liceo Scientifico - Scienze Applicate</p>
     </header>
 
-    <main class="container">
-        <a href="https://torricellimi.edu.it/notizie/732-pannelli-solari-sul-tetto-della-scuola" target="_blank" class="btn-spotlight clickable">
+    <main class="box-link">
+        <a href="https://torricellimi.edu.it/notizie/732-pannelli-solari-sul-tetto-della-scuola" target="_blank" rel="noopener" class="btn-luce click">
             <i class="fas fa-solar-panel"></i> <span>Progetto Pannelli Solari</span>
         </a>
 
-        <a href="mailto:matteonobile@teamdigitale.torricellimi.edu.it" class="btn-spotlight clickable">
+        <a href="mailto:matteonobile@teamdigitale.torricellimi.edu.it" class="btn-luce click">
             <i class="fas fa-envelope"></i> <span>Scrivimi via Email</span>
         </a>
         
-        <a href="https://www.instagram.com/la_storia_insegna_?igsh=ZzhnazhtNDBmdTA2" target="_blank" class="btn-spotlight clickable">
+        <a href="https://www.instagram.com/la_storia_insegna_?igsh=ZzhnazhtNDBmdTA2" target="_blank" rel="noopener" class="btn-luce click">
             <i class="fab fa-instagram"></i> <span>la_storia_insegna_</span>
         </a>
         
-        <a href="https://it.linkedin.com/in/matteo-nobile-456ba43b9" target="_blank" class="btn-spotlight clickable">
+        <a href="https://it.linkedin.com/in/matteo-nobile-456ba43b9" target="_blank" rel="noopener" class="btn-luce click">
             <i class="fab fa-linkedin"></i> <span>Profilo Professionale</span>
         </a>
 
-        <a href="https://www.piazzaarmerina.org/agenda-eventi/palio-dei-normanni" target="_blank" class="btn-spotlight clickable">
+        <a href="https://www.piazzaarmerina.org/agenda-eventi/palio-dei-normanni" target="_blank" rel="noopener" class="btn-luce click">
             <i class="fas fa-shield-alt"></i> <span>Palio dei Normanni: Figurante</span>
         </a>
 
-        <button id="smile-toggle" class="btn-spotlight clickable">
+        <button id="tasto-festa" class="btn-luce click">
             <i class="fas fa-rocket"></i> <span> Modalità Allegria: ON</span>
         </button>
 
-        <div class="theme-wrapper">
-            <button id="theme-toggle" class="clickable">
+        <div class="area-tema">
+            <button id="tasto-notte" class="click">
                 <i class="fas fa-moon"></i> <span>Passa alla modalità notte</span>
             </button>
         </div>
@@ -141,68 +144,72 @@
     <script>
         alert("Benvenuto nel mio Linktree Interattivo!");
 
-        const cursor = document.getElementById('custom-cursor');
-        const body = document.body;
-        const canvas = document.getElementById('smile-canvas');
-        const ctx = canvas.getContext('2d');
+        const oggPunt = document.getElementById('punt-pers');
+        const oggCorpo = document.body;
+        const oggTela = document.getElementById('sfond-anim');
+        const oggCont = oggTela.getContext('2d');
 
+        // Muove il puntatore e la luce sui tasti
         document.addEventListener('mousemove', (e) => {
-            cursor.style.left = e.clientX + 'px';
-            cursor.style.top = e.clientY + 'px';
-            document.querySelectorAll('.btn-spotlight').forEach(btn => {
-                const rect = btn.getBoundingClientRect();
-                btn.style.setProperty('--x', (e.clientX - rect.left) + 'px');
-                btn.style.setProperty('--y', (e.clientY - rect.top) + 'px');
+            oggPunt.style.left = e.clientX + 'px';
+            oggPunt.style.top = e.clientY + 'px';
+            document.querySelectorAll('.btn-luce').forEach(btn => {
+                const r = btn.getBoundingClientRect();
+                btn.style.setProperty('--x', (e.clientX - r.left) + 'px');
+                btn.style.setProperty('--y', (e.clientY - r.top) + 'px');
             });
         });
 
-        document.querySelectorAll('.clickable').forEach(el => {
-            el.addEventListener('mouseenter', () => body.classList.add('custom-cursor-hover'));
-            el.addEventListener('mouseleave', () => body.classList.remove('custom-cursor-hover'));
+        // Ingrossa puntatore quando passi sopra i tasti
+        document.querySelectorAll('.click').forEach(el => {
+            el.addEventListener('mouseenter', () => oggCorpo.classList.add('punt-su'));
+            el.addEventListener('mouseleave', () => oggCorpo.classList.remove('punt-su'));
         });
 
-        const themeBtn = document.getElementById('theme-toggle');
-        themeBtn.addEventListener('click', () => {
-            body.classList.toggle('dark-mode');
-            const isDark = body.classList.contains('dark-mode');
-            themeBtn.querySelector('span').innerText = isDark ? "Passa alla modalità giorno" : "Passa alla modalità notte";
-            themeBtn.querySelector('i').className = isDark ? "fas fa-sun" : "fas fa-moon";
+        // Cambia tema Giorno/Notte
+        const btnTem = document.getElementById('tasto-notte');
+        btnTem.addEventListener('click', () => {
+            oggCorpo.classList.toggle('notte-on');
+            const isNotte = oggCorpo.classList.contains('notte-on');
+            btnTem.querySelector('span').innerText = isNotte ? "Passa alla modalità giorno" : "Passa alla modalità notte";
+            btnTem.querySelector('i').className = isNotte ? "fas fa-sun" : "fas fa-moon";
         });
 
-        // SMILE RAIN
-        let width, height, columns, drops;
-        const smiles = ["😄", "😊", "😎", "🤩", "✨", "🎈"]; 
-        let smileInterval = null;
+        // EFFETTO CADUTA ICONE
+        let lar, alt, col, goc;
+        const icone = ["😄", "😊", "😎", "🤩", "✨", "🎈"]; 
+        let timer = null;
 
-        function initSmiles() {
-            width = canvas.width = window.innerWidth;
-            height = canvas.height = window.innerHeight;
-            columns = Math.floor(width / 35);
-            drops = new Array(columns).fill(0).map(() => Math.random() * -15);
+        function avvio() {
+            lar = oggTela.width = window.innerWidth;
+            alt = oggTela.height = window.innerHeight;
+            col = Math.floor(lar / 35);
+            goc = new Array(col).fill(0).map(() => Math.random() * -15);
         }
 
-        function drawSmiles() {
-            ctx.clearRect(0, 0, width, height);
-            ctx.font = '24px Arial';
-            for (let i = 0; i < drops.length; i++) {
-                ctx.fillText(smiles[i % smiles.length], i * 35, drops[i] * 35);
-                if (drops[i] * 35 > height) drops[i] = -2;
-                drops[i] += 0.25;
+        function disegna() {
+            oggCont.clearRect(0, 0, lar, alt);
+            oggCont.font = '24px Arial';
+            for (let i = 0; i < goc.length; i++) {
+                oggCont.fillText(icone[i % icone.length], i * 35, goc[i] * 35);
+                if (goc[i] * 35 > alt) goc[i] = -2;
+                goc[i] += 0.25; // Velocità caduta
             }
         }
 
-        document.getElementById('smile-toggle').addEventListener('click', () => {
-            if (body.classList.contains('smile-active')) return;
-            alert("Non sapevo cosa mettere, ma volevo farti sorridere! 😄");
-            body.classList.add('smile-active');
-            initSmiles();
-            smileInterval = setInterval(drawSmiles, 30);
+        // Tasto per far piovere icone per 5 secondi
+        document.getElementById('tasto-festa').addEventListener('click', () => {
+            if (oggCorpo.classList.contains('anim-on')) return;
+            alert("Non sapevo cosa mettere, ma volevo strapparti un sorriso!");
+            oggCorpo.classList.add('anim-on');
+            avvio();
+            timer = setInterval(disegna, 30);
             setTimeout(() => {
-                body.classList.remove('smile-active');
+                oggCorpo.classList.remove('anim-on');
                 setTimeout(() => { 
-                    clearInterval(smileInterval); 
-                    smileInterval = null; 
-                    ctx.clearRect(0, 0, width, height); 
+                    clearInterval(timer); 
+                    timer = null; 
+                    oggCont.clearRect(0, 0, lar, alt); 
                 }, 1000);
             }, 5000);
         });
